@@ -7,6 +7,7 @@ Release:	0.1
 URL:		http://www.midgard-project.org/
 Vendor:		Midgard Project <http://www.midgard-project.org>
 Source0:	%{arname}-%{version}.tar.bz2
+Patch0:         %{arname}-conf.patch
 Copyright:	distributable
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -25,6 +26,7 @@ BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %prep
 %setup -q -n %{arname}-%{version}
+%patch0 -p1
 
 %description
 Midgard is a freely-available Web application development and
