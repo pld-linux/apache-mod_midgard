@@ -13,6 +13,11 @@ Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Requires:	midgard-lib = %{version}, apache >= 1.3.12
 Provides:	mod_midgard
+BuildRequires:	midgard-lib-devel = %{version}
+BuildRequires:	expat-devel
+BuildRequires:	mysql-devel
+BuildRequires:	apache >= 1.3.12
+BuildRequires:	apache-devel >= 1.3.12
 BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _pkglibdir      %(%{_sbindir}/apxs -q LIBEXECDIR)
@@ -40,7 +45,7 @@ utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 ./configure \
 	--with-apxs=%{_sbindir}/apxs \
 	--with-mysql \
-	--with-midgar=/usr \
+	--with-midgar \
 	--with-expat
 %{__make}
 
