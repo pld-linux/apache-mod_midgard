@@ -67,7 +67,7 @@ gzip -9nf AUTHORS COPYING ChangeLog INSTALL INSTALL.ru NEWS README README.ru
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{_sbindir}/apxs -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
+%{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 echo "Include %{_sysconfdir}/%{mod_name}.conf" >> %{_sysconfdir}/httpd.conf
 if [ -f /var/lock/subsys/httpd ]; then
     /etc/rc.d/init.d/httpd restart 1>&2
@@ -75,7 +75,7 @@ fi
 
 %preun
 if [ "$1" = "0" ]; then
-    %{_sbindir}/apxs -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
+    %{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
     %__perl -pi -e "s|Include %{_sysconfdir}/%{mod_name}.conf\n||g;" \
             %{_sysconfdir}/httpd.conf
     if [ -f /var/lock/subsys/httpd ]; then
