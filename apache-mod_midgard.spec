@@ -61,8 +61,6 @@ install midgard-root.php $RPM_BUILD_ROOT%{_pkglibdir}
 install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
 install midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}
 
-gzip -9nf AUTHORS COPYING ChangeLog INSTALL INSTALL.ru NEWS README README.ru
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -88,4 +86,4 @@ fi
 %config %{_pkglibdir}/midgard-root.php
 %config(noreplace) %{_sysconfdir}/midgard.conf
 %attr(755,root,root) %{_pkglibdir}/mod_midgard.so
-%doc *.gz
+%doc AUTHORS COPYING ChangeLog INSTALL INSTALL.ru NEWS README README.ru
