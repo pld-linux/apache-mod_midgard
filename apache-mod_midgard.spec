@@ -11,7 +11,7 @@ Copyright: distributable
 Group: System Environment/Daemons
 Requires: mysql-shared-libs, apache = 1.3.9, midgard-lib = %{version}
 Provides: mod_midgard
-BuildRoot: /var/tmp/%{name}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %prep
 %setup
@@ -31,8 +31,6 @@ umo¿liwiaj±cy uzytkownikowi tworzenie rozwi±zañ w otwartym ¶rodowisku.
 Midgard jest narzêdziem do tworzenia, modyfikacji i utrzymywania 
 dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
-
-
 %build
 CFLAGS=$RPM_OPT_FLAGS PATH=/usr/sbin/:$PATH LDFLAGS="-L/usr/lib/mysql -lmidgard -lmysqlclient" ./configure --with-midgard=/usr/
 make
@@ -46,7 +44,6 @@ cp midgard-root.php3 $RPM_BUILD_ROOT/home/httpd/html/
 cp *.so $RPM_BUILD_ROOT/usr/lib/apache/
 
 cp %{SOURCE1} $RPM_BUILD_ROOT/etc/httpd/conf/addon-modules/
-
 
 %post
 echo "Include conf/addon-modules/%{name}.conf" >> /etc/httpd/conf/httpd.conf
@@ -62,7 +59,6 @@ $perl -pi -e "s|Include conf/addon-modules/%{name}.conf\n||g;" \
 if [ -f /etc/httpd/httpd.pid ]; then 
    /usr/sbin/apachectl restart
 fi
-
 
 %files
 %config /home/httpd/html/midgard-root.php3
