@@ -24,6 +24,15 @@ your solutions in an open environment. Midgard is the tool for
 creating, modifying and maintaining dynamic database-enabled web
 services.
 
+%description
+Midgard jest wolnodostêpn± platform± rozwoju i publikowania aplikacji 
+opart± na popularnym jêzyku skryptowym, PHP. Jest to projekt Open Source,
+umo¿liwiaj±cy uzytkownikowi tworzenie rozwi±zañ w otwartym ¶rodowisku.
+Midgard jest narzêdziem do tworzenia, modyfikacji i utrzymywania 
+dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
+
+
+
 %build
 CFLAGS=$RPM_OPT_FLAGS PATH=/usr/sbin/:$PATH LDFLAGS="-L/usr/lib/mysql -lmidgard -lmysqlclient" ./configure --with-midgard=/usr/
 make
