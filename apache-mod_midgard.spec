@@ -13,14 +13,16 @@ Source0:	%{arname}-%{version}.tar.bz2
 #Source0:	http://www.midgard-project.org/attachment/434f392e6f87e1e76202f00695dd251f/599f017caa73216fbf3d676ff086d37f/%{arname}-1.4.1-5.tar.bz2
 Patch0:		%{arname}-conf.patch
 URL:		http://www.midgard-project.org/
-Requires:	midgard-lib = %{version}, apache >= 1.3.12
-Provides:	mod_midgard
 BuildRequires:	midgard-lib-devel = %{version}
 BuildRequires:	expat-devel
 BuildRequires:	mysql-devel
 BuildRequires:	apache-devel >= 1.3.12
 BuildRequires:	%{apxs}
-Prereq:		%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
+Requires(preun):	perl
+Requires:	apache >= 1.3.12
+Requires:	midgard-lib = %{version}
+Provides:	mod_midgard
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _pkglibdir      %(%{apxs} -q LIBEXECDIR)
@@ -68,17 +70,17 @@ rm -rf $RPM_BUILD_ROOT
 %{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 echo "Include %{_sysconfdir}/%{mod_name}.conf" >> %{_sysconfdir}/httpd.conf
 if [ -f /var/lock/subsys/httpd ]; then
-    /etc/rc.d/init.d/httpd restart 1>&2
+	/etc/rc.d/init.d/httpd restart 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-    %{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
-    %__perl -pi -e "s|Include %{_sysconfdir}/%{mod_name}.conf\n||g;" \
-            %{_sysconfdir}/httpd.conf
-    if [ -f /var/lock/subsys/httpd ]; then
-        /etc/rc.d/init.d/httpd restart 1>&2
-    fi
+	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
+	%{__perl} -pi -e "s|Include %{_sysconfdir}/%{mod_name}.conf\n||g;" \
+		%{_sysconfdir}/httpd.conf
+	if [ -f /var/lock/subsys/httpd ]; then
+		/etc/rc.d/init.d/httpd restart 1>&2
+	fi
 fi
 
 %files
