@@ -7,7 +7,7 @@ Release:	0.1
 URL:		http://www.midgard-project.org/
 Vendor:		Midgard Project <http://www.midgard-project.org>
 Source0:	%{arname}-%{version}.tar.bz2
-Patch0:         %{arname}-conf.patch
+Patch0:		%{arname}-conf.patch
 Copyright:	distributable
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -19,7 +19,7 @@ BuildRequires:	expat-devel
 BuildRequires:	mysql-devel
 BuildRequires:	apache >= 1.3.12
 BuildRequires:	apache-devel >= 1.3.12
-BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _pkglibdir      %(%{_sbindir}/apxs -q LIBEXECDIR)
 %define         _sysconfdir     /etc/httpd
@@ -45,17 +45,19 @@ utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
 %build
 ./configure \
-	--with-apxs=%{_sbindir}/apxs \
+	--with-apxs=/usr/sbin/apxs \
 	--with-mysql \
 	--with-midgar \
 	--with-expat
 %{__make}
 
 %install
-%{__install} -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}}
-%{__install} midgard-root.php $RPM_BUILD_ROOT%{_pkglibdir}
-%{__install} mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
-%{__install} midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}}
+
+install midgard-root.php $RPM_BUILD_ROOT%{_pkglibdir}
+install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+install midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}
 
 gzip -9nf AUTHORS COPYING ChangeLog INSTALL INSTALL.ru NEWS README README.ru
 
