@@ -1,6 +1,7 @@
 %define         mod_name        midgard
 %define		arname		mod_midgard
 Summary:	Midgard Apache module
+Summary(pl):	Modu³ Midgard do Apache
 Name:		apache-mod_midgard
 Version:	1.4.1_5
 Release:	0.1
@@ -8,7 +9,7 @@ URL:		http://www.midgard-project.org/
 Vendor:		Midgard Project <http://www.midgard-project.org>
 Source0:	%{arname}-%{version}.tar.bz2
 Patch0:		%{arname}-conf.patch
-Copyright:	distributable
+License:	distributable
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
@@ -39,7 +40,7 @@ services.
 %description -l pl
 Midgard jest wolnodostêpn± platform± rozwoju i publikowania aplikacji
 opart± na popularnym jêzyku skryptowym, PHP. Jest to projekt Open
-Source, umo¿liwiaj±cy uzytkownikowi tworzenie rozwi±zañ w otwartym
+Source, umo¿liwiaj±cy u¿ytkownikowi tworzenie rozwi±zañ w otwartym
 ¶rodowisku. Midgard jest narzêdziem do tworzenia, modyfikacji i
 utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
@@ -60,6 +61,9 @@ install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
 install midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}
 
 gzip -9nf AUTHORS COPYING ChangeLog INSTALL INSTALL.ru NEWS README README.ru
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post
 %{_sbindir}/apxs -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
@@ -84,6 +88,3 @@ fi
 %config(noreplace) %{_sysconfdir}/midgard.conf
 %attr(755,root,root) %{_pkglibdir}/mod_midgard.so
 %doc *.gz
-
-%clean
-rm -rf $RPM_BUILD_ROOT
