@@ -33,7 +33,7 @@ utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
 %build
 CFLAGS=$RPM_OPT_FLAGS PATH=%{_sbindir}/:$PATH LDFLAGS="-L%{_libdir}/mysql -lmidgard -lmysqlclient" ./configure --with-midgard=%{_prefix}/
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
