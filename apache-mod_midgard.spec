@@ -1,5 +1,6 @@
 %define         mod_name        midgard
 %define		arname		mod_midgard
+%define 	apxs		/usr/sbin/apxs
 Summary:	Midgard Apache module
 Summary(pl):	Modu³ Midgard do Apache
 Name:		apache-mod_midgard
@@ -8,8 +9,20 @@ Release:	0.1
 License:	distributable
 Vendor:		Midgard Project <http://www.midgard-project.org>
 Group:		Networking/Daemons
+Group(cs):	Sí»ové/Démoni
+Group(da):	Netværks/Dæmoner
 Group(de):	Netzwerkwesen/Server
+Group(es):	Red/Servidores
+Group(fr):	Réseau/Serveurs
+Group(is):	Net/Púkar
+Group(it):	Rete/Demoni
+Group(no):	Nettverks/Daemoner
 Group(pl):	Sieciowe/Serwery
+Group(pt):	Rede/Servidores
+Group(ru):	óÅÔØ/äÅÍÏÎÙ
+Group(sl):	Omre¾ni/Stre¾niki
+Group(sv):	Nätverk/Demoner
+Group(uk):	íÅÒÅÖÁ/äÅÍÏÎÉ
 Source0:	%{arname}-%{version}.tar.bz2
 #Source0:	http://www.midgard-project.org/attachment/434f392e6f87e1e76202f00695dd251f/599f017caa73216fbf3d676ff086d37f/%{arname}-1.4.1-5.tar.bz2
 Patch0:		%{arname}-conf.patch
@@ -19,11 +32,12 @@ Provides:	mod_midgard
 BuildRequires:	midgard-lib-devel = %{version}
 BuildRequires:	expat-devel
 BuildRequires:	mysql-devel
-BuildRequires:	apache >= 1.3.12
 BuildRequires:	apache-devel >= 1.3.12
+BuildRequires:	%{apxs}
+Prereq:		%{_sbindir}/apxs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define         _pkglibdir      %(%{_sbindir}/apxs -q LIBEXECDIR)
+%define         _pkglibdir      %(%{apxs} -q LIBEXECDIR)
 %define         _sysconfdir     /etc/httpd
 
 %prep
@@ -47,7 +61,7 @@ utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
 %build
 ./configure \
-	--with-apxs=/usr/sbin/apxs \
+	--with-apxs=%{apxs} \
 	--with-mysql \
 	--with-midgar \
 	--with-expat
