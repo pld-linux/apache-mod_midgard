@@ -10,6 +10,7 @@ License:	distributable
 Vendor:		Midgard Project <http://www.midgard-project.org>
 Group:		Networking/Daemons
 Source0:	%{arname}-%{version}.tar.bz2
+# Source0-md5:	9b00986652ed2b495aebc23ec2337bb1
 #Source0:	http://www.midgard-project.org/attachment/434f392e6f87e1e76202f00695dd251f/599f017caa73216fbf3d676ff086d37f/%{arname}-1.4.1-5.tar.bz2
 Patch0:		%{arname}-conf.patch
 URL:		http://www.midgard-project.org/
