@@ -1,4 +1,4 @@
-%define         mod_name        midgard
+%define		mod_name	midgard
 %define		arname		mod_midgard
 %define 	apxs		/usr/sbin/apxs
 Summary:	Midgard Apache module
@@ -26,7 +26,7 @@ Requires:	midgard-lib = %{version}
 Provides:	mod_midgard
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define         _pkglibdir      %(%{apxs} -q LIBEXECDIR)
+%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
 %define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
 
 %prep
