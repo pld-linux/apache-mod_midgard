@@ -7,8 +7,7 @@ Vendor:		Midgard Project <http://www.midgard-project.org>
 Source0:	mod_midgard-%{version}.tar.bz2
 Source1:	%{name}.conf
 Copyright:	distributable
-Group:		System Environment/Daemons
-######		Unknown group!
+Group:		Networking/Daemons
 Requires:	mysql-shared-libs, apache = 1.3.9, midgard-lib = %{version}
 Provides:	mod_midgard
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
