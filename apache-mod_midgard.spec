@@ -4,10 +4,12 @@ Version:	1.2.1
 Release:	5mdk
 URL:		http://www.midgard-project.org/
 Vendor:		Midgard Project <http://www.midgard-project.org>
-Source0:	mod_midgard-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.bz2
 Source1:	%{name}.conf
 Copyright:	distributable
 Group:		Networking/Daemons
+Group(de):	Netzwerkwesen/Server
+Group(pl):	Sieciowe/Serwery
 Requires:	mysql-shared-libs, apache = 1.3.9, midgard-lib = %{version}
 Provides:	mod_midgard
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -31,7 +33,7 @@ Source, umo¿liwiaj±cy uzytkownikowi tworzenie rozwi±zañ w otwartym
 utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
 %build
-CFLAGS=$RPM_OPT_FLAGS PATH=%{_sbindir}/:$PATH LDFLAGS="-L%{_libdir}/mysql -lmidgard -lmysqlclient" ./configure --with-midgard=%{_prefix}/
+CFLAGS="%{rpmcflags}" PATH=%{_sbindir}/:$PATH LDFLAGS="-L%{_libdir}/mysql -lmidgard -lmysqlclient %{rpmldflags}" ./configure --with-midgard=%{_prefix}/
 %{__make}
 
 %install
@@ -40,10 +42,13 @@ install -d $RPM_BUILD_ROOT/home/httpd/html/
 install -d $RPM_BUILD_ROOT%{_libdir}/apache/
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf/addon-modules/
 
-cp midgard-root.php3 $RPM_BUILD_ROOT/home/httpd/html/
-cp *.so $RPM_BUILD_ROOT%{_libdir}/apache/
+cp -f midgard-root.php3 $RPM_BUILD_ROOT/home/httpd/html/
+cp -f *.so $RPM_BUILD_ROOT%{_libdir}/apache/
 
-cp %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf/addon-modules/
+cp -f %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf/addon-modules/
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post
 echo "Include conf/addon-modules/%{name}.conf" >> /etc/httpd/conf/httpd.conf
