@@ -5,7 +5,7 @@ Summary:	Midgard Apache module
 Summary(pl):	Modu³ Midgard do Apache
 Name:		apache-mod_midgard
 Version:	1.4.1_5
-Release:	0.1
+Release:	2
 License:	distributable
 Vendor:		Midgard Project <http://www.midgard-project.org>
 Group:		Networking/Daemons
