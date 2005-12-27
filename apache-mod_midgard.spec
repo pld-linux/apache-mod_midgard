@@ -1,3 +1,5 @@
+# TODO
+# - not compatible with apache2 (is it apache1 module?)
 %define		mod_name	midgard
 %define		arname		mod_midgard
 %define 	apxs		/usr/sbin/apxs
@@ -15,19 +17,17 @@ Source0:	%{arname}-%{version}.tar.bz2
 Patch0:		%{arname}-conf.patch
 URL:		http://www.midgard-project.org/
 BuildRequires:	%{apxs}
-BuildRequires:	apache-devel >= 1.3.12
+BuildRequires:	apache-devel >= 2.0
 BuildRequires:	expat-devel
-BuildRequires:	midgard-lib-devel = %{version}
+BuildRequires:	midgard-lib-devel >= 1.4.1-5
 BuildRequires:	mysql-devel
-Requires(post,preun):	%{apxs}
-Requires(preun):	perl
-Requires:	apache >= 1.3.12
-Requires:	midgard-lib = %{version}
+Requires:	apache(modules-api) = %apache_modules_api
+%requires_eq_to midgard-lib midgard-lib-devel
 Provides:	mod_midgard
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
-%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
+%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
 
 %prep
 %setup -q -n %{arname}-%{version}
@@ -58,27 +58,22 @@ utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}/httpd.conf}
 
 install midgard-root.php $RPM_BUILD_ROOT%{_pkglibdir}
 install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
-install midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}
+install midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/90_mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
-echo "Include %{_sysconfdir}/%{mod_name}.conf" >> %{_sysconfdir}/httpd.conf
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
-	%{__perl} -pi -e "s|Include %{_sysconfdir}/%{mod_name}.conf\n||g;" \
-		%{_sysconfdir}/httpd.conf
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
@@ -86,7 +81,8 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%config %{_pkglibdir}/midgard-root.php
-%config(noreplace) %{_sysconfdir}/midgard.conf
-%attr(755,root,root) %{_pkglibdir}/mod_midgard.so
 %doc AUTHORS COPYING ChangeLog INSTALL INSTALL.ru NEWS README README.ru
+# FIXME
+%config %{_pkglibdir}/midgard-root.php
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_%{mod_name}.conf
+%attr(755,root,root) %{_pkglibdir}/*.so
