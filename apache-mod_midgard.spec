@@ -21,6 +21,7 @@ BuildRequires:	apache-devel >= 2.0
 BuildRequires:	expat-devel
 BuildRequires:	midgard-lib-devel >= 1.4.1-5
 BuildRequires:	mysql-devel
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	apache(modules-api) = %apache_modules_api
 %requires_eq_to midgard-lib midgard-lib-devel
 Provides:	mod_midgard
@@ -68,15 +69,11 @@ install midgard.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/90_mod_%{mod_name}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
-fi
+%service -q httpd restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
-	fi
+	%service -q httpd restart
 fi
 
 %files
