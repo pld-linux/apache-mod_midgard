@@ -4,7 +4,7 @@
 %define		arname		mod_midgard
 %define 	apxs		/usr/sbin/apxs
 Summary:	Midgard Apache module
-Summary(pl.UTF-8):   Moduł Midgard do Apache
+Summary(pl.UTF-8):	Moduł Midgard do Apache
 Name:		apache-mod_midgard
 Version:	1.4.1_5
 Release:	2
