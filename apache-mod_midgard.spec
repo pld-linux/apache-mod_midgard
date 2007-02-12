@@ -4,7 +4,7 @@
 %define		arname		mod_midgard
 %define 	apxs		/usr/sbin/apxs
 Summary:	Midgard Apache module
-Summary(pl):	Modu³ Midgard do Apache
+Summary(pl.UTF-8):   ModuÅ‚ Midgard do Apache
 Name:		apache-mod_midgard
 Version:	1.4.1_5
 Release:	2
@@ -42,12 +42,12 @@ your solutions in an open environment. Midgard is the tool for
 creating, modifying and maintaining dynamic database-enabled web
 services.
 
-%description -l pl
-Midgard jest wolnodostêpn± platform± rozwoju i publikowania aplikacji
-opart± na popularnym jêzyku skryptowym, PHP. Jest to projekt Open
-Source, umo¿liwiaj±cy u¿ytkownikowi tworzenie rozwi±zañ w otwartym
-¶rodowisku. Midgard jest narzêdziem do tworzenia, modyfikacji i
-utrzymywania dynamicznych, wykorzystuj±cych bazy danych serwisów WWW.
+%description -l pl.UTF-8
+Midgard jest wolnodostÄ™pnÄ… platformÄ… rozwoju i publikowania aplikacji
+opartÄ… na popularnym jÄ™zyku skryptowym, PHP. Jest to projekt Open
+Source, umoÅ¼liwiajÄ…cy uÅ¼ytkownikowi tworzenie rozwiÄ…zaÅ„ w otwartym
+Å›rodowisku. Midgard jest narzÄ™dziem do tworzenia, modyfikacji i
+utrzymywania dynamicznych, wykorzystujÄ…cych bazy danych serwisÃ³w WWW.
 
 %build
 ./configure \
