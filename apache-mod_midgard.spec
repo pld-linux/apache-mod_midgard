@@ -32,7 +32,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %prep
 %setup -q -n %{arname}-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %description
 Midgard is a freely-available Web application development and
